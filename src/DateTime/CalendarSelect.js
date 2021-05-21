@@ -34,7 +34,8 @@ class CalendarSelect extends Component {
       textDayStyle,
       currentDayStyle,
       notCurrentDayOfMonthStyle,
-      activeOpacity
+      activeOpacity,
+      selectedDateTextStyle
     } = this.props
     const isCurrentMonth = calendarMonth === CommonFn.ym()
     const isCurrent = isCurrentMonth && CommonFn.ymd() === day
@@ -48,8 +49,9 @@ class CalendarSelect extends Component {
         <View>
           {renderChildDay(day)}
           <Text style={[styles.day, textDayStyle,
-          isCurrent ? { color: 'red', ...currentDayStyle } : {},
-          notCurrentMonth ? { color: '#493D40', ...notCurrentDayOfMonthStyle } : {}]}>
+            isCurrent ? { color: 'red', ...currentDayStyle } : {},
+            dateSelected ? { ...selectedDateTextStyle } : {},
+            notCurrentMonth ? { color: '#493D40', ...notCurrentDayOfMonthStyle } : {}]}>
             {day.split('-')[2]}
           </Text>
         </View>
@@ -81,15 +83,22 @@ class CalendarSelect extends Component {
 
   render() {
     const {
-      calendarMonth, renderPrevYearButton, renderPrevMonthButton,
-      renderNextYearButton, renderNextMonthButton,
-      weekdayStyle, customWeekdays, warpRowWeekdays,
-      warpRowControlMonthYear, monthTextStyle, yearTextStyle, showMonthName = false
+      calendarMonth,
+      renderPrevYearButton,
+      renderPrevMonthButton,
+      renderNextYearButton,
+      renderNextMonthButton,
+      weekdayStyle,
+      customWeekdays,
+      warpRowWeekdays,
+      warpRowControlMonthYear,
+      monthTextStyle,
+      yearTextStyle,
+      showMonthName = false
     } = this.props
-    const weekdays = customWeekdays || ['Sun', 'Mon', 'Tus', 'Wes', 'Thu', 'Fri', 'Sat']
+    const weekdays = customWeekdays || ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     const monthNames = ['', "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
-    ];
+      "July", "August", "September", "October", "November", "December" ];
     const data = CommonFn.calendarArray(calendarMonth)
     var dayOfWeek = []
     _.forEach(weekdays, element => {
@@ -148,7 +157,7 @@ const propTypes = {
 }
 
 const defaultProps = {
-  customWeekdays: ['Sun', 'Mon', 'Tus', 'Wes', 'Thu', 'Fri', 'Sat']
+  customWeekdays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 }
 
 CalendarSelect.propTypes = propTypes
